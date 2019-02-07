@@ -17,7 +17,14 @@ public class QueenBoard{
     return true;
   }
 
-  private boolean removeQueen(int r, int c){
+  public boolean removeQueen(int r, int c){
+    if (board[r][c] != -1) return false;
+    board[r][c] = 0;
+    for (int y = 1; y < board.length - c; y++){
+      board[r][c + y] -= 1;
+      if (r + y < board.length) board[r + y][c + y] -= 1;
+      if (r - y >= 0) board[r - y][c + y] -= 1;
+    }
     return true;
   }
 
@@ -70,5 +77,12 @@ public class QueenBoard{
     for (int i = 0; i < a.board.length; i++){
       System.out.println(Arrays.toString(a.board[i]));
     }
+    a.addQueen(0,0);
+    a.removeQueen(3,0);
+    System.out.println();
+    for (int i = 0; i < a.board.length; i++){
+      System.out.println(Arrays.toString(a.board[i]));
+    }
+
   }
 }
