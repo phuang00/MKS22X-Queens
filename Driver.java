@@ -5,5 +5,11 @@ public class Driver{
     System.out.println();
     System.out.println(a.addQueen(2,2));
     System.out.println(a);
+    System.out.println();
+    System.out.println(a.addQueen(2,3));
+    System.out.println(a);
+    System.out.println();
+    System.out.println(a.removeQueen(2,2));
+    System.out.println(a);
   }
 }
