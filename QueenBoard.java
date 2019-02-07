@@ -6,11 +6,11 @@ public class QueenBoard{
     board = new int[size][size];
   }
 
-  private boolean addQueen(int r, int c){
+  public boolean addQueen(int r, int c){
     if (board[r][c] != 0) return false;
     board[r][c] = -1;
-    for (int x = 0; x < board.length - r; x++){
-      for (int y = 0; y < board.length - c; y++){
+    for (int x = 1; x < board.length - r - 1; x++){
+      for (int y = 1; y < board.length - c - 1; y++){
         board[r][c + y] += 1;
         board[r + x][c + y] += 1;
         board[r - x][c + y] += 1;
@@ -41,7 +41,7 @@ public class QueenBoard{
       for (int j = 0; j < board.length; j++){
         if (board[i][j] == -1) ans += "Q";
         else ans += "_";
-        if (j == board.length - 1) ans += "\n";
+        if (j == board.length - 1 && i != board.length - 1) ans += "\n";
         else ans += " ";
       }
     }
