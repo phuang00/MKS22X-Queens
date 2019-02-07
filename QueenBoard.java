@@ -1,16 +1,26 @@
+import java.util.*;
 public class QueenBoard{
   private int[][] board;
 
   public QueenBoard(int size){
-
+    board = new int[size][size];
   }
 
   private boolean addQueen(int r, int c){
-
+    if (board[r][c] != 0) return false;
+    board[r][c] = -1;
+    for (int x = 0; x < board.length - r; x++){
+      for (int y = 0; y < board.length - c; y++){
+        board[r][c + y] += 1;
+        board[r + x][c + y] += 1;
+        board[r - x][c + y] += 1;
+      }
+    }
+    return true;
   }
 
   private boolean removeQueen(int r, int c){
-
+    return true;
   }
 
   /**
@@ -26,7 +36,16 @@ public class QueenBoard{
   *excludes the character up to the *)
   */
   public String toString(){
-
+    String ans = "";
+    for (int i = 0; i < board.length; i++){
+      for (int j = 0; j < board.length; j++){
+        if (board[i][j] == -1) ans += "Q";
+        else ans += "_";
+        if (j == board.length - 1) ans += "\n";
+        else ans += " ";
+      }
+    }
+    return ans;
   }
 
 
@@ -36,7 +55,7 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve(){
-
+    return true;
   }
 
   /**
@@ -44,7 +63,7 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions(){
-
+    return -1;
   }
 
 }
