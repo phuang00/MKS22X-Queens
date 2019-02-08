@@ -60,7 +60,28 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve(){
-    return true;
+    return this.hSolve(0,0);
+  }
+
+  private boolean hSolve(int y, int xinc){
+    int[] queens = new int[board.length];
+    for (int j = y; j < board.length; j++){
+      for (int i = 0; i < board.length; i++){
+        if (i + j == board.length * 2 - 2) return addQueen(i,j);
+        if (j == y) {
+          i += xinc;
+        }
+        if (addQueen(i,j)){
+          queens[j] = i;
+          j++;
+        }
+        else if (i == board.length - 1){
+            removeQueen(j - 1, queens[j - 1]);
+            hSolve(j - 1, queens[j - 1]);
+        }
+      }
+    }
+    return false;
   }
 
   /**
