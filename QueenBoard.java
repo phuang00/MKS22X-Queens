@@ -60,24 +60,32 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve(){
-    return this.hSolve(0,0);
+    return this.hSolve(0,0, new int[board.length]);
   }
 
-  private boolean hSolve(int y, int xinc){
-    int[] queens = new int[board.length];
-    for (int j = y; j < board.length; j++){
+  public boolean hSolve(int y, int xinc, int[] queens){
+    for (int j = 0 + y; j < board.length; j++){
       for (int i = 0; i < board.length; i++){
-        if (i + j == board.length * 2 - 2) return addQueen(i,j);
+        if (i + j > board.length * 2 - 2) return addQueen(i,j);
         if (j == y) {
           i += xinc;
+          System.out.println(j);
+          System.out.println(y);
+          System.out.println(i);
         }
-        if (addQueen(i,j)){
+        if (i < board.length && addQueen(i,j)){
           queens[j] = i;
           j++;
+          i = -1;
+          for (int w = 0; w < board.length; w++){
+            System.out.println(Arrays.toString(board[w]));
+          }
         }
-        else if (i == board.length - 1){
-            removeQueen(j - 1, queens[j - 1]);
-            hSolve(j - 1, queens[j - 1]);
+        else if (i >= board.length - 1){
+          System.out.println("true");
+          if (j == 0) return false;
+          removeQueen(j - 1, queens[j - 1]);
+          hSolve(j - 1, queens[j - 1] + 1, queens);
         }
       }
     }
@@ -94,12 +102,17 @@ public class QueenBoard{
 
   public static void main(String[] args) {
     QueenBoard a = new QueenBoard(4);
-    a.addQueen(3,0);
+    a.addQueen(2,2);
     for (int i = 0; i < a.board.length; i++){
       System.out.println(Arrays.toString(a.board[i]));
     }
     a.addQueen(0,0);
-    a.removeQueen(3,0);
+    System.out.println();
+    for (int i = 0; i < a.board.length; i++){
+      System.out.println(Arrays.toString(a.board[i]));
+    }
+
+    a.removeQueen(2,2);
     System.out.println();
     for (int i = 0; i < a.board.length; i++){
       System.out.println(Arrays.toString(a.board[i]));
