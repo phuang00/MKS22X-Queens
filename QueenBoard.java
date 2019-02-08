@@ -66,24 +66,31 @@ public class QueenBoard{
   private boolean hSolve(int y, int xinc, int[] queens){
     for (int j = 0 + y; j < board.length; j++){
       for (int i = 0; i < board.length; i++){
+        System.out.println(j);
+        System.out.println(i);
         if (j == board.length - 1 && addQueen(i,j)) return true;
         if (j == y) {
           i += xinc;
         }
-        if (i < board.length && j < board.length && addQueen(i,j)){
+        if (i < board.length && addQueen(i,j)){
           queens[j] = i;
           j++;
           i = -1;
+          System.out.println(this);
+          for (int w = 0; w < board.length; w++){
+            System.out.println(Arrays.toString(board[w]));
+          }
         }
-        else {
+        else if (i == board.length - 1){
           if (j == 0){
-            if (i == board.length - 1){
               board = new int[queens.length][queens.length];
               return false;
-            }
-            return hSolve(j, i + 1, queens);
           }
           removeQueen(queens[j - 1], j - 1);
+          System.out.println("a");
+          for (int w = 0; w < board.length; w++){
+            System.out.println(Arrays.toString(board[w]));
+          }
           return hSolve(j - 1, queens[j - 1] + 1, queens);
         }
       }
