@@ -60,6 +60,11 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve(){
+    for (int i = 0; i < board.length; i++){
+      for (int j = 0; j < board.length; j++){
+        if (board[i][j] != 0) throw new IllegalStateException();
+      }
+    }
     return this.hSolve(0, 0, new int[board.length]);
   }
 
@@ -94,6 +99,11 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public int countSolutions(){
+    for (int i = 0; i < board.length; i++){
+      for (int j = 0; j < board.length; j++){
+        if (board[i][j] != 0) throw new IllegalStateException();
+      }
+    }
     return -1;
   }
 
