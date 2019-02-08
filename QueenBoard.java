@@ -6,7 +6,7 @@ public class QueenBoard{
     board = new int[size][size];
   }
 
-  public boolean addQueen(int r, int c){
+  private boolean addQueen(int r, int c){
     if (board[r][c] != 0) return false;
     board[r][c] = -1;
     for (int y = 1; y < board.length - c; y++){
@@ -17,7 +17,7 @@ public class QueenBoard{
     return true;
   }
 
-  public boolean removeQueen(int r, int c){
+  private boolean removeQueen(int r, int c){
     if (board[r][c] != -1) return false;
     board[r][c] = 0;
     for (int y = 1; y < board.length - c; y++){
@@ -60,14 +60,12 @@ public class QueenBoard{
   *@throws IllegalStateException when the board starts with any non-zero value
   */
   public boolean solve(){
-    return this.hSolve(0,0, new int[board.length]);
+    return this.hSolve(0, 0, new int[board.length]);
   }
 
   private boolean hSolve(int y, int xinc, int[] queens){
     for (int j = 0 + y; j < board.length; j++){
       for (int i = 0; i < board.length; i++){
-        System.out.println(j);
-        System.out.println(i);
         if (j == board.length - 1 && addQueen(i,j)) return true;
         if (j == y) {
           i += xinc;
@@ -76,21 +74,13 @@ public class QueenBoard{
           queens[j] = i;
           j++;
           i = -1;
-          System.out.println(this);
-          for (int w = 0; w < board.length; w++){
-            System.out.println(Arrays.toString(board[w]));
-          }
         }
-        else if (i == board.length - 1){
+        else if (i >= board.length - 1){
           if (j == 0){
               board = new int[queens.length][queens.length];
               return false;
           }
           removeQueen(queens[j - 1], j - 1);
-          System.out.println("a");
-          for (int w = 0; w < board.length; w++){
-            System.out.println(Arrays.toString(board[w]));
-          }
           return hSolve(j - 1, queens[j - 1] + 1, queens);
         }
       }
