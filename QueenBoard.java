@@ -104,7 +104,35 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    return -1;
+    int count = 0;
+    boolean first = true;
+    int[] prev = new int[board.length];
+    int[] queens = new int[board.length];
+    for (int i = 0; i < board.length; i++){
+      if (first){
+        if (hSolve(0, i, prev)){
+          count++;
+          first = false;
+          board = new int[board.length][board.length];
+        }
+        else prev = new int[board.length];
+      }
+      else {
+        if (hSolve(0 , i, queens)){
+          boolean same = true;
+          for (int x = 0; x < board.length; x++){
+            if (prev[x] != queens[x]) same = false;
+          }
+          if (!same){
+            prev = queens;
+            queens = new int[board.length];
+            count++;
+          }
+          board = new int[board.length][board.length];
+        }
+      }
+    }
+    return count;
   }
 
   public static void main(String[] args) {
