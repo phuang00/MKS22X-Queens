@@ -1,15 +1,31 @@
 public class Driver{
   public static void main(String[] args) {
-    QueenBoard a = new QueenBoard(4);
+    QueenBoard a = new QueenBoard(1);
+    System.out.println(a.solve());
     System.out.println(a);
+
     System.out.println();
-    System.out.println(a.addQueen(2,2));
+
+    a = new QueenBoard(2);
+    System.out.println(a.solve());
     System.out.println(a);
+
     System.out.println();
-    System.out.println(a.addQueen(2,3));
+
+    a = new QueenBoard(3);
+    System.out.println(a.solve());
     System.out.println(a);
+
     System.out.println();
-    System.out.println(a.removeQueen(2,2));
+
+    a = new QueenBoard(4);
+    System.out.println(a.solve());
+    System.out.println(a);
+
+    System.out.println();
+    
+    a = new QueenBoard(7);
+    System.out.println(a.solve());
     System.out.println(a);
   }
 }
