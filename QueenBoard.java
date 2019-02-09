@@ -87,7 +87,10 @@ public class QueenBoard{
     else{
       if (queens[index] >= board.length - 1) {
         queens[index] = 0;
-        if (index == start) return false;
+        if (index == start) {
+          board = new int[board.length][board.length];
+          return false;
+        }
         removeQueen(queens[index - 1], index - 1);
         queens[index - 1]++;
         return helpS(start, index - 1, queens, count);
