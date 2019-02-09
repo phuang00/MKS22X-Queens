@@ -65,33 +65,26 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    return this.hSolve(0, 0, new int[board.length]);
+    return helpS(0, new int[board.length]);
   }
 
-  private boolean hSolve(int y, int xinc, int[] queens){
-    for (int j = 0 + y; j < board.length; j++){
-      for (int i = 0; i < board.length; i++){
-        if (j == board.length - 1 && addQueen(i,j)) return true;
-        if (j == y) {
-          i += xinc;
-        }
-        if (i < board.length && addQueen(i,j)){
-          queens[j] = i;
-          j++;
-          i = -1;
-        }
-        else if (i >= board.length - 1){
-          if (j == 0){
-              board = new int[queens.length][queens.length];
-              return false;
-          }
-          removeQueen(queens[j - 1], j - 1);
-          return hSolve(j - 1, queens[j - 1] + 1, queens);
-        }
+  private boolean helpS(int index, int[] queens){
+    if (index < 0) return false;
+    if (index >= queens.length) return true;
+    if (queens[index] < queens.length && addQueen(queens[index], index)) return helpS(index + 1, queens);
+    else{
+      if (queens[index] >= board.length - 1) {
+        queens[index] = 0;
+        if (index == 0) return false;
+        removeQueen(queens[index - 1], index - 1);
+        queens[index - 1]++;
+        return helpS(index - 1, queens);
+      }
+      else{
+        queens[index]++;
+        return helpS(index, queens);
       }
     }
-    board = new int[queens.length][queens.length];
-    return false;
   }
 
   /**
@@ -104,6 +97,11 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
+    int[] queens = new int[board.length];
+    ArrayList<String> sols = new ArrayList<>();
+
+    return 0;
+    /*
     int count = 0;
     boolean first = true;
     int[] prev = new int[board.length];
@@ -132,7 +130,7 @@ public class QueenBoard{
         }
       }
     }
-    return count;
+    return count;*/
   }
 
   public static void main(String[] args) {
