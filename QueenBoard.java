@@ -65,24 +65,36 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    return helpS(0, new int[board.length]);
+    return helpS(0, 0, new int[board.length], new ArrayList<String>());
   }
 
-  private boolean helpS(int index, int[] queens){
-    if (index < 0) return false;
-    if (index >= queens.length) return true;
-    if (queens[index] < queens.length && addQueen(queens[index], index)) return helpS(index + 1, queens);
+  private static String convert(int[] queens){
+    String ans = "";
+    for (int i = 0; i < queens.length; i++){
+      ans += queens[i];
+    }
+    return ans;
+  }
+
+  private boolean helpS(int start, int index, int[] queens, ArrayList<String> count){
+    if (index < start) return false;
+    if (index >= queens.length) {
+      String a = convert(queens);
+      if (!count.contains(a)) count.add(a);
+      return true;
+    }
+    if (queens[index] < queens.length && addQueen(queens[index], index)) return helpS(start, index + 1, queens, count);
     else{
       if (queens[index] >= board.length - 1) {
         queens[index] = 0;
-        if (index == 0) return false;
+        if (index == start) return false;
         removeQueen(queens[index - 1], index - 1);
         queens[index - 1]++;
-        return helpS(index - 1, queens);
+        return helpS(start, index - 1, queens, count);
       }
       else{
         queens[index]++;
-        return helpS(index, queens);
+        return helpS(start, index, queens, count);
       }
     }
   }
@@ -98,9 +110,21 @@ public class QueenBoard{
       }
     }
     int[] queens = new int[board.length];
+    int[] testy = new int[board.length];
     ArrayList<String> sols = new ArrayList<>();
-
-    return 0;
+    if (helpS(0,0, queens, sols)){
+      for (int index = 0; index < queens.length - 1; index++){
+        for (int i = 0; i < index; i++){
+          testy[i] = queens[i];
+        }
+        for (int i = index; i < queens.length; i++){
+          testy[i] = queens[i] + 1;
+          helpS(index, index, testy, sols);
+        }
+      }
+      return sols.size();
+    }
+    else return 0;
     /*
     int count = 0;
     boolean first = true;
