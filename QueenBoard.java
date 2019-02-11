@@ -65,7 +65,7 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    return helpS(0, 0, 0, false);
+    return helpS(0, 0, false);
   }
 
   private static String convert(int[] queens){
@@ -76,19 +76,32 @@ public class QueenBoard{
     return ans;
   }
 
-  private boolean helpS(int index, int row, int count, boolean remove){
+  private boolean helpS(int index, int row, boolean remove){
     if (index == board.length){
       return true;
     }
     if (remove) removeQueen(row - 1, index);
     for (int i = row; i < board.length; i++){
       if (addQueen(i, index)){
-        return helpS(index + 1, 0, count + 1, false) || helpS(index, i + 1, count, true);
+        return helpS(index + 1, 0, false) || helpS(index, i + 1, true);
       }
       if (i != board.length - 1) removeQueen(i, index);
-      else return false;
     }
     return false;
+  }
+
+  private int helpC(int index, int row,boolean remove){
+    if (index == board.length){
+      return 1;
+    }
+    if (remove) removeQueen(row - 1, index);
+    for (int i = row; i < board.length; i++){
+      if (addQueen(i, index)){
+        return helpC(index + 1, 0, false) + helpC(index, i + 1, true);
+      }
+      if (i != board.length - 1) removeQueen(i, index);
+    }
+    return 0;
   }
 
   /**
@@ -101,11 +114,9 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    int count = 0;
-    helpS(0, 0, count, false);
-    return count;
+    return helpC(0, 0, false);
   }
-/*
+
   public static void main(String[] args) {
     QueenBoard a = new QueenBoard(4);
     a.addQueen(0,0);
@@ -124,5 +135,5 @@ public class QueenBoard{
       System.out.println(Arrays.toString(a.board[i]));
     }
 
-  }*/
+  }
 }
