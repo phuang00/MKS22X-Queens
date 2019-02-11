@@ -65,7 +65,7 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    return helpS(0, 0, new int[board.length], new ArrayList<String>());
+    return helpS(0, 0, 0, false);
   }
 
   private static String convert(int[] queens){
@@ -76,30 +76,19 @@ public class QueenBoard{
     return ans;
   }
 
-  private boolean helpS(int start, int index, int[] queens, ArrayList<String> count){
-    if (index < start) return false;
-    if (index >= queens.length) {
-      String a = convert(queens);
-      if (!count.contains(a)) count.add(a);
+  private boolean helpS(int index, int row, int count, boolean remove){
+    if (index == board.length){
       return true;
     }
-    if (queens[index] < queens.length && addQueen(queens[index], index)) return helpS(start, index + 1, queens, count);
-    else{
-      if (queens[index] >= board.length - 1) {
-        queens[index] = 0;
-        if (index == start) {
-          board = new int[board.length][board.length];
-          return false;
-        }
-        removeQueen(queens[index - 1], index - 1);
-        queens[index - 1]++;
-        return helpS(start, index - 1, queens, count);
+    if (remove) removeQueen(row - 1, index);
+    for (int i = row; i < board.length; i++){
+      if (addQueen(i, index)){
+        return helpS(index + 1, 0, count + 1, false) || helpS(index, i + 1, count, true);
       }
-      else{
-        queens[index]++;
-        return helpS(start, index, queens, count);
-      }
+      if (i != board.length - 1) removeQueen(i, index);
+      else return false;
     }
+    return false;
   }
 
   /**
@@ -112,54 +101,11 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    int[] queens = new int[board.length];
-    int[] testy = new int[board.length];
-    ArrayList<String> sols = new ArrayList<>();
-    if (helpS(0,0, queens, sols)){
-      for (int index = 0; index < queens.length - 1; index++){
-        for (int i = 0; i < index; i++){
-          testy[i] = queens[i];
-        }
-        for (int i = index; i < queens.length; i++){
-          testy[i] = queens[i] + 1;
-          helpS(index, index, testy, sols);
-        }
-      }
-      return sols.size();
-    }
-    else return 0;
-    /*
     int count = 0;
-    boolean first = true;
-    int[] prev = new int[board.length];
-    int[] queens = new int[board.length];
-    for (int i = 0; i < board.length; i++){
-      if (first){
-        if (hSolve(0, i, prev)){
-          count++;
-          first = false;
-          board = new int[board.length][board.length];
-        }
-        else prev = new int[board.length];
-      }
-      else {
-        if (hSolve(0 , i, queens)){
-          boolean same = true;
-          for (int x = 0; x < board.length; x++){
-            if (prev[x] != queens[x]) same = false;
-          }
-          if (!same){
-            prev = queens;
-            queens = new int[board.length];
-            count++;
-          }
-          board = new int[board.length][board.length];
-        }
-      }
-    }
-    return count;*/
+    helpS(0, 0, count, false);
+    return count;
   }
-
+/*
   public static void main(String[] args) {
     QueenBoard a = new QueenBoard(4);
     a.addQueen(0,0);
@@ -178,5 +124,5 @@ public class QueenBoard{
       System.out.println(Arrays.toString(a.board[i]));
     }
 
-  }
+  }*/
 }
