@@ -32,5 +32,33 @@ public class Driver{
     //System.out.println(a.solve());
     System.out.println(a.countSolutions());
     System.out.println(a);
+
+    System.out.println();
+
+    a = new QueenBoard(6);
+    //System.out.println(a.solve());
+    System.out.println(a.countSolutions());
+    System.out.println(a);
+
+    System.out.println();
+
+    a = new QueenBoard(7);
+    //System.out.println(a.solve());
+    System.out.println(a.countSolutions());
+    System.out.println(a);
+
+    System.out.println();
+
+    a = new QueenBoard(8);
+    //System.out.println(a.solve());
+    System.out.println(a.countSolutions());
+    System.out.println(a);
+
+    System.out.println();
+
+    a = new QueenBoard(9);
+    //System.out.println(a.solve());
+    System.out.println(a.countSolutions());
+    System.out.println(a);
   }
 }
