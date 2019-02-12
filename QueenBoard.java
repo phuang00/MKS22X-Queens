@@ -83,9 +83,11 @@ public class QueenBoard{
     if (remove) removeQueen(row - 1, index);
     for (int i = row; i < board.length; i++){
       if (addQueen(i, index)){
+        //System.out.println(Text.go(1,1));
+        //System.out.println(this);Text.wait(250); //adjust this delay
         return helpS(index + 1, 0, false) || helpS(index, i + 1, true);
       }
-      if (i != board.length - 1) removeQueen(i, index);
+      removeQueen(i, index);
     }
     return false;
   }
@@ -97,9 +99,11 @@ public class QueenBoard{
     if (remove) removeQueen(row - 1, index);
     for (int i = row; i < board.length; i++){
       if (addQueen(i, index)){
+        //System.out.println(Text.go(1,1));
+        //System.out.println(this);Text.wait(250); //adjust this delay
         return helpC(index + 1, 0, false) + helpC(index, i + 1, true);
       }
-      if (i != board.length - 1) removeQueen(i, index);
+      removeQueen(i, index);
     }
     return 0;
   }
