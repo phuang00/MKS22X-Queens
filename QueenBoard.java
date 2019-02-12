@@ -92,20 +92,20 @@ public class QueenBoard{
     return false;
   }
 
-  private int helpC(int index, int row,boolean remove){
+  private int helpC(int index){
     if (index == board.length){
       return 1;
     }
-    if (remove) removeQueen(row - 1, index);
-    for (int i = row; i < board.length; i++){
+    int ans = 0;
+    for (int i = 0; i < board.length; i++){
       if (addQueen(i, index)){
         //System.out.println(Text.go(1,1));
         //System.out.println(this);Text.wait(250); //adjust this delay
-        return helpC(index + 1, 0, false) + helpC(index, i + 1, true);
+        ans += helpC(index + 1);
       }
       removeQueen(i, index);
     }
-    return 0;
+    return ans;
   }
 
   /**
@@ -118,7 +118,7 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    return helpC(0, 0, false);
+    return helpC(0);
   }
 
   public static void main(String[] args) {
