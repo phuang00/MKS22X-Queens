@@ -65,7 +65,7 @@ public class QueenBoard{
         if (board[i][j] != 0) throw new IllegalStateException();
       }
     }
-    return helpS(0, 0, false);
+    return helpS(0);
   }
 
   private static String convert(int[] queens){
@@ -76,16 +76,17 @@ public class QueenBoard{
     return ans;
   }
 
-  private boolean helpS(int index, int row, boolean remove){
+  private boolean helpS(int index){
     if (index == board.length){
       return true;
     }
-    if (remove) removeQueen(row - 1, index);
-    for (int i = row; i < board.length; i++){
+    for (int i = 0; i < board.length; i++){
       if (addQueen(i, index)){
         //System.out.println(Text.go(1,1));
         //System.out.println(this);Text.wait(250); //adjust this delay
-        return helpS(index + 1, 0, false) || helpS(index, i + 1, true);
+        if (helpS(index + 1)){
+          return true;
+        }
       }
       removeQueen(i, index);
     }
